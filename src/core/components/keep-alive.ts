@@ -106,10 +106,16 @@ export default {
   },
 
   methods: {
+    /**
+     * @description: 缓存虚拟dom
+     * @return {*}
+     */
     cacheVNode() {
+      // 获取当前缓存的虚拟dom对象
       const { cache, keys, vnodeToCache, keyToCache } = this
       if (vnodeToCache) {
         const { tag, componentInstance, componentOptions } = vnodeToCache
+        // 更新当前缓存的dom对象的一些属性
         cache[keyToCache] = {
           name: _getComponentName(componentOptions),
           tag,
@@ -155,17 +161,21 @@ export default {
 
   render() {
     const slot = this.$slots.default
+    // 获取第一个子组件的虚拟dom
     const vnode = getFirstComponentChild(slot)
+    // 获取组件的options
     const componentOptions = vnode && vnode.componentOptions
     if (componentOptions) {
       // check pattern
+      // 获取名字
       const name = _getComponentName(componentOptions)
       const { include, exclude } = this
       /**
-      * 如果配置了include则判断是否包含不该名字
-      * 如果配了excluded则判断是否包含该名字
-      * 返回的是最新的组件实例而不是缓存
-      */
+       * 这里是判断不需要缓存的组件实例走的逻辑，直接返回最新的vnode
+       * 如果配置了include则判断是否包含不该名字
+       * 如果配了excluded则判断是否包含该名字
+       * 返回的是最新的组件实例而不是缓存
+       */
       if (
         // not included
         (include && (!name || !matches(include, name))) ||
@@ -175,6 +185,7 @@ export default {
         return vnode
       }
 
+      // 获取缓存对象和key数组
       const { cache, keys } = this
       // 相同的构造函数可能会注册成不同的组件，所以单独使用cid来区分是不行的。
       const key =
@@ -186,10 +197,12 @@ export default {
         // 直接拿到缓存的组件实例赋值给当前的组件实例
         vnode.componentInstance = cache[key].componentInstance
         // 把当前key删掉，然后重新添加到keys数组中，保证keys数组中的key值是最新的(下标越小代表使用时间最早)
+        // remove 就是  keys.splice(index, 1)
         remove(keys, key)
         keys.push(key)
       } else {
         // 如果缓存不存在，则把当前组件的虚拟dom缓存起来
+        // 用于记录最新的vnode对象
         this.vnodeToCache = vnode
         this.keyToCache = key
       }
