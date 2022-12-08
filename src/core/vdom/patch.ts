@@ -799,28 +799,34 @@ export function createPatchFunction(backend) {
   }
 
   return function patch(oldVnode, vnode, hydrating, removeOnly) {
+    // 不存在新的节点，存在旧的节点则直接删除
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
     }
-
+    // 标记是否是首次渲染
     let isInitialPatch = false
     const insertedVnodeQueue: any[] = []
 
+    // 如果不存在旧节点，说明是首次渲染
     if (isUndef(oldVnode)) {
       // empty mount (likely as component), create new root element
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
     } else {
+      // 判断是否是真实的dom节点
       const isRealElement = isDef(oldVnode.nodeType)
+      // 如果不是真实的dom节点，说明是虚拟节点
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
         patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly)
       } else {
+        // 如果是真实的dom节点，或者不是同一个节点，则直接替换
         if (isRealElement) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
+          // 如果是服务端渲染的内容
           if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true

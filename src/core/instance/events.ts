@@ -10,6 +10,7 @@ import {
 import { updateListeners } from '../vdom/helpers/index'
 
 export function initEvents(vm: Component) {
+  // 给vm实例上绑定_events属性，用于存储事件名称以及对应的处理函数
   vm._events = Object.create(null)
   vm._hasHookEvent = false
   // init parent attached events

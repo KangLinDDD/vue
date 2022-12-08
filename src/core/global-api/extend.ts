@@ -32,6 +32,7 @@ export function initExtend(Vue: GlobalAPI) {
       validateComponentName(name)
     }
 
+    // 组件的构造函数
     const Sub = function VueComponent(this: any, options: any) {
       this._init(options)
     } as unknown as typeof Component
@@ -44,9 +45,11 @@ export function initExtend(Vue: GlobalAPI) {
     // For props and computed properties, we define the proxy getters on
     // the Vue instances at extension time, on the extended prototype. This
     // avoids Object.defineProperty calls for each instance created.
+    // 注册组件中的props
     if (Sub.options.props) {
       initProps(Sub)
     }
+    // 注册组件中的计算属性
     if (Sub.options.computed) {
       initComputed(Sub)
     }

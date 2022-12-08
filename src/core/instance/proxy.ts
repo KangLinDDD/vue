@@ -82,6 +82,7 @@ if (__DEV__) {
   }
 
   initProxy = function initProxy(vm) {
+    // 判断有没有Proxy对象，浏览器环境下是有的
     if (hasProxy) {
       // determine which proxy handler to use
       const options = vm.$options

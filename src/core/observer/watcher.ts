@@ -88,6 +88,7 @@ export default class Watcher implements DepTarget {
     if (options) {
       this.deep = !!options.deep
       this.user = !!options.user
+      // 是否立即更新视图，渲染watcher为true，计算属性为false
       this.lazy = !!options.lazy
       this.sync = !!options.sync
       this.before = options.before
@@ -131,6 +132,7 @@ export default class Watcher implements DepTarget {
    * Evaluate the getter, and re-collect dependencies.
    */
   get() {
+    // 渲染子组件时需要把父组件的watcher先保存下来
     pushTarget(this)
     let value
     const vm = this.vm

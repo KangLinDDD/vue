@@ -56,7 +56,10 @@ export function initState(vm: Component) {
   // Composition API
   initSetup(vm)
 
-  if (opts.methods) initMethods(vm, opts.methods)
+  if (opts.methods) {
+    // 如果有 methods 属性，则将methods里面的函数this指向vm
+    initMethods(vm, opts.methods)
+  }
   if (opts.data) {
     initData(vm)
   } else {
@@ -120,7 +123,9 @@ function initProps(vm: Component, propsOptions: Object) {
 }
 
 function initData(vm: Component) {
+  // 获取options中的data选项
   let data: any = vm.$options.data
+  // 初始化 组件中的data，因为在组件中，data是一个函数，在vue实例中data才是一个对象
   data = vm._data = isFunction(data) ? getData(data, vm) : data || {}
   if (!isPlainObject(data)) {
     data = {}
@@ -132,6 +137,8 @@ function initData(vm: Component) {
       )
   }
   // proxy data on instance
+  // 获取data、methods、props中的所有属性
+  // 用于判断 data中的属性是否和methods、props中的属性重名
   const keys = Object.keys(data)
   const props = vm.$options.props
   const methods = vm.$options.methods
@@ -151,10 +158,13 @@ function initData(vm: Component) {
           vm
         )
     } else if (!isReserved(key)) {
+      // 如果属性名是以 _或$开头，则不会把该属性注入到vue实例中。
+      // 将data中的属性绑定到vue实例上，其实是拿的_data的值
       proxy(vm, `_data`, key)
     }
   }
   // observe data
+  // 响应式对象
   const ob = observe(data)
   ob && ob.vmCount++
 }
@@ -289,6 +299,7 @@ function initMethods(vm: Component, methods: Object) {
           vm
         )
       }
+      // props不能和methods定义相同的属性
       if (props && hasOwn(props, key)) {
         warn(`Method "${key}" has already been defined as a prop.`, vm)
       }

@@ -19,6 +19,7 @@ import platformComponents from './components/index'
 import type { Component } from 'types/component'
 
 // install platform specific utils
+// 给 vue.config 挂载一些方法
 Vue.config.mustUseProp = mustUseProp
 Vue.config.isReservedTag = isReservedTag
 Vue.config.isReservedAttr = isReservedAttr
@@ -33,6 +34,7 @@ extend(Vue.options.components, platformComponents)
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
+// 给vue挂载 $mount 方法
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean

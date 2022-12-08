@@ -7,7 +7,7 @@ import { TriggerOpTypes } from '../../v3'
 import { def } from '../util/index'
 
 const arrayProto = Array.prototype
-export const arrayMethods = Object.create(arrayProto)
+export const arrayMethods = Object.create(Array.prototype)
 
 const methodsToPatch = [
   'push',
@@ -28,6 +28,7 @@ methodsToPatch.forEach(function (method) {
   def(arrayMethods, method, function mutator(...args) {
     const result = original.apply(this, args)
     const ob = this.__ob__
+    // 要向数组中插入的数据
     let inserted
     switch (method) {
       case 'push':
@@ -38,6 +39,7 @@ methodsToPatch.forEach(function (method) {
         inserted = args.slice(2)
         break
     }
+    // 如果有插入的数据，则重新监听新数据
     if (inserted) ob.observeArray(inserted)
     // notify change
     if (__DEV__) {

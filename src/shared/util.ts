@@ -359,8 +359,10 @@ export function once<T extends (...args: any[]) => any>(fn: T): T {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#polyfill
 export function hasChanged(x: unknown, y: unknown): boolean {
   if (x === y) {
+    // 判断是否为0
     return x === 0 && 1 / x !== 1 / (y as number)
   } else {
+    // 判断 NaN
     return x === x || y === y
   }
 }

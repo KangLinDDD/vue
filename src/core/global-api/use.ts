@@ -10,6 +10,7 @@ export function initUse(Vue: GlobalAPI) {
     }
 
     // additional parameters
+    // 将 类似object的数据 转换成真实的数组
     const args = toArray(arguments, 1)
     args.unshift(this)
     if (isFunction(plugin.install)) {

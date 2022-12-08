@@ -36,7 +36,9 @@ export default class Dep {
     remove(this.subs, sub)
   }
 
+  // 将观察对象和watcher关联起来
   depend(info?: DebuggerEventExtraInfo) {
+    // 这里的 Target 其实是 watcher
     if (Dep.target) {
       Dep.target.addDep(this)
       if (__DEV__ && info && Dep.target.onTrack) {
@@ -71,6 +73,8 @@ export default class Dep {
   }
 }
 
+// Dep.target 用来存放目前正在使用的watcher
+// 全局唯一，并且一次也只有一个watcher被使用
 // The current target watcher being evaluated.
 // This is globally unique because only one watcher
 // can be evaluated at a time.
