@@ -295,7 +295,7 @@ function genConfig(name) {
 
   return config
 }
-
+console.log(process.NODE_ENV, 'aaaaaa')
 if (process.env.TARGET) {
   module.exports = genConfig(process.env.TARGET)
 } else {
