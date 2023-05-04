@@ -225,6 +225,17 @@ const builds = {
   }
 }
 
+// const builds = {
+//   'full-dev': {
+//     entry: resolve('web/entry-runtime-with-compiler.ts'),
+//     dest: resolve('dist/vue.js'),
+//     format: 'umd',
+//     env: 'development',
+//     alias: { he: './entity-decoder' },
+//     banner
+//   },
+// }
+
 function genConfig(name) {
   const opts = builds[name]
 
@@ -295,7 +306,6 @@ function genConfig(name) {
 
   return config
 }
-console.log(process.NODE_ENV, 'aaaaaa')
 if (process.env.TARGET) {
   module.exports = genConfig(process.env.TARGET)
 } else {

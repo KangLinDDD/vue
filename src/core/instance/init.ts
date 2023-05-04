@@ -18,7 +18,7 @@ export function initMixin(Vue: typeof Component) {
     const vm: Component = this
     // 唯一标识
     vm._uid = uid++
-
+    debugger
     let startTag, endTag
     /* istanbul ignore if */
     if (__DEV__ && config.performance && mark) {
@@ -86,6 +86,7 @@ export function initMixin(Vue: typeof Component) {
     }
     // 挂载
     if (vm.$options.el) {
+      debugger
       vm.$mount(vm.$options.el)
     }
   }

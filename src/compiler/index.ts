@@ -11,10 +11,14 @@ export const createCompiler = createCompilerCreator(function baseCompile(
   template: string,
   options: CompilerOptions
 ): CompiledResult {
+  debugger
+  // 根据模版生成ast语法树
   const ast = parse(template.trim(), options)
   if (options.optimize !== false) {
+    // 给ast对象添加一些属性
     optimize(ast, options)
   }
+  // 根据ast生成code 这时的code是html
   const code = generate(ast, options)
   return {
     ast,

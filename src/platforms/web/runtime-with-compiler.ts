@@ -17,13 +17,13 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+debugger
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
   el = el && query(el)
-
   /* istanbul ignore if */
   if (el === document.body || el === document.documentElement) {
     __DEV__ &&

@@ -211,7 +211,7 @@ export function parse(template: string, options: CompilerOptions): ASTElement {
       )
     }
   }
-
+  debugger
   parseHTML(template, {
     warn,
     expectHTML: options.expectHTML,

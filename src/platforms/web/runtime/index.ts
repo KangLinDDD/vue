@@ -29,7 +29,7 @@ Vue.config.isUnknownElement = isUnknownElement
 // install platform runtime directives & components
 extend(Vue.options.directives, platformDirectives)
 extend(Vue.options.components, platformComponents)
-
+debugger
 // install platform patch function
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 

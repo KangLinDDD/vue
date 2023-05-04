@@ -799,6 +799,7 @@ export function createPatchFunction(backend) {
   }
 
   return function patch(oldVnode, vnode, hydrating, removeOnly) {
+    debugger
     // 不存在新的节点，存在旧的节点则直接删除
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -814,7 +815,7 @@ export function createPatchFunction(backend) {
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
     } else {
-      // 判断是否是真实的dom节点
+      // 根据nodeType判断是否是真实的dom节点
       const isRealElement = isDef(oldVnode.nodeType)
       // 如果不是真实的dom节点，说明是虚拟节点
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
