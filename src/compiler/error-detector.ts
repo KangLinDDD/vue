@@ -5,6 +5,7 @@ type Range = { start?: number; end?: number }
 
 // these keywords should not appear inside expressions, but operators like
 // typeof, instanceof and in are allowed
+//
 const prohibitedKeywordRE = new RegExp(
   '\\b' +
     (
